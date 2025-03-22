@@ -63,12 +63,12 @@ bcrypt is a widely-used password hashing algorithm that has been around for deca
 Implementation can be found in the bcrypt/ directory
 
 ### Comparison
-    | Feature            | Argon2                          | bcrypt                          |
-    |--------------------|---------------------------------|---------------------------------|
-    | **Security**       | High (memory-hard)             | Moderate                       |
-    | **Performance**    | Slower (more secure)           | Faster                         |
-    | **Ease of Use**    | Moderate (more configuration)  | Easy                           |
-    | **Node.js Support**| Supported via `argon2` package | Supported via `bcrypt` package |
+| Feature            | Argon2                          | bcrypt                          |
+|--------------------|---------------------------------|---------------------------------|
+| **Security**       | High (memory-hard)             | Moderate                       |
+| **Performance**    | Slower (more secure)           | Faster                         |
+| **Ease of Use**    | Moderate (more configuration)  | Easy                           |
+| **Node.js Support**| Supported via `argon2` package | Supported via `bcrypt` package |
 
 ### Example Usage
 ## Argon2
