@@ -6,7 +6,7 @@ This is a simple Node.js API for user authentication using `bcrypt` for password
 
 ## 📌 Table of Contents
 
-1. [Features](##features)
+1. [Features](#features)
 2. [Prerequisites](#prerequisites)
 3. [Setup Instructions](#setup-instructions)
 4. [API Endpoints](#api-endpoints)
