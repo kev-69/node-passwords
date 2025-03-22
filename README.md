@@ -32,25 +32,25 @@ The goal of this repository is to:
 
 2. Navigate to the sub-repo you want to test (argon2 or bcrypt):
 ```bash
-cd argon2
-# or
-cd bcrypt
+    cd argon2
+    # or
+    cd bcrypt
 ```
 
 3. Install dependencies:
 ```bash
-npm install
+    npm install
 ```
 
 4. Create a .env file in the respective sub-repo directory and add the following:
 ```bash
-PORT=3000
-JWT_SECRET=your_secret_key
+    PORT=3000
+    JWT_SECRET=your_secret_key
 ```
 
 5. Start the server
 ```bash
-npm start
+    npm start
 ```
 
 ### Features
@@ -63,33 +63,33 @@ bcrypt is a widely-used password hashing algorithm that has been around for deca
 Implementation can be found in the bcrypt/ directory
 
 ### Comparison
-| Feature            | Argon2                          | bcrypt                          |
-|--------------------|---------------------------------|---------------------------------|
-| **Security**       | High (memory-hard)             | Moderate                       |
-| **Performance**    | Slower (more secure)           | Faster                         |
-| **Ease of Use**    | Moderate (more configuration)  | Easy                           |
-| **Node.js Support**| Supported via `argon2` package | Supported via `bcrypt` package |
+    | Feature            | Argon2                          | bcrypt                          |
+    |--------------------|---------------------------------|---------------------------------|
+    | **Security**       | High (memory-hard)             | Moderate                       |
+    | **Performance**    | Slower (more secure)           | Faster                         |
+    | **Ease of Use**    | Moderate (more configuration)  | Easy                           |
+    | **Node.js Support**| Supported via `argon2` package | Supported via `bcrypt` package |
 
 ### Example Usage
 ## Argon2
 ```bash
-const argon2 = require("argon2");
+    const argon2 = require("argon2");
 
-// Hash a password
-const hashedPassword = await argon2.hash("your_password");
+    // Hash a password
+    const hashedPassword = await argon2.hash("your_password");
 
-// Verify a password
-const isValid = await argon2.verify(hashedPassword, "your_password");
+    // Verify a password
+    const isValid = await argon2.verify(hashedPassword, "your_password");
 ```
 ## bcrypt
 ```bash
-const bcrypt = require("bcrypt");
+    const bcrypt = require("bcrypt");
 
-// Hash a password
-const hashedPassword = await bcrypt.hash("your_password", 10);
+    // Hash a password
+    const hashedPassword = await bcrypt.hash("your_password", 10);
 
-// Verify a password
-const isValid = await bcrypt.compare("your_password", hashedPassword);
+    // Verify a password
+    const isValid = await bcrypt.compare("your_password", hashedPassword);
 ```
 
 ### Conclusion
