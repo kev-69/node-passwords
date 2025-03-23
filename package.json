@@ -4,7 +4,8 @@
   "description": "This repository is a comparison of password protection algorithms in Node.js, specifically focusing on **Argon2** and **bcrypt**. It contains two sub-repositories, one for each algorithm, to demonstrate their usage and performance in password hashing and verification.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api/index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,11 @@
     "argon2": "^0.41.1",
     "bcrypt": "^5.1.1",
     "brcypt": "^1.0.1",
-    "express": "^4.21.2"
+    "colorette": "^2.0.20",
+    "express": "^4.21.2",
+    "inquirer": "^8.2.6"
+  },
+  "bin": {
+    "hash-cli": "./cli/index.js"
   }
 }
