@@ -2,8 +2,11 @@
 
 const inquirer = require('inquirer');
 const colorette = require("colorette");
-const { hashPassword,
-    verifyPassword 
+const { 
+        hashBcrytp,
+        hashArgon,
+        verifyBcrypt,
+        verifyArgon 
 } = require('./utils');
 
 
@@ -42,7 +45,16 @@ async function main() {
             }
         ]);
 
-        const hashedPassword = await hashPassword(password, algorithm);
+        let hashedPassword;
+        if (algorithm === "bcrypt") {
+            hashedPassword = await hashBcrytp(password);
+            
+        } else if (algorithm === "argon2") {
+            hashedPassword = await hashArgon(password);
+        } else {
+            throw new Error("Invalid algorithm!");
+        }
+
         console.log(colorette.green(`\nHashed password: ${hashedPassword}`));
     } else if (action === "Verify a password") {
         const { hash } = await inquirer.prompt([
@@ -53,11 +65,31 @@ async function main() {
             }
         ]);
 
-        const isValid = await verifyPassword(password, hash);
-        console.log(isValid
-            ? colorette.yellow(`\nPassword is valid! ✅\n`)
-            : colorette.red(`\nPassword is invalid! ❌\n`)
-        );
+        try {
+            let sanitizedHash = hash.trim();
+            let isValid;
+            if (sanitizedHash.startsWith("$2b$")) {
+                // Hash is bcrypt
+                isValid = await verifyBcrypt(password, hash);
+                console.log(isValid
+                    ? colorette.yellow(`\nPassword is valid! ✅ (bcrypt)\n`)
+                    : colorette.red(`\nPassword is invalid! ❌ (bcrypt)\n`)
+                );
+                console.log(sanitizedHash)
+            } else if (sanitizedHash.startsWith("$argon2")) {
+                // Hash is Argon2
+                isValid = await verifyArgon(password, hash);
+                console.log(isValid
+                    ? colorette.yellow(`\nPassword is valid! ✅ (argon2)\n`)
+                    : colorette.red(`\nPassword is invalid! ❌ (argon2)\n`)
+                );
+                console.log(sanitizedHash)
+            } else {
+                console.log(colorette.red("\nInvalid hash format! Hash must start with '$2b$' (bcrypt) or '$argon2' (argon2). ❌\n"));
+            }
+        } catch (error) {
+            console.log(colorette.red(`\nError: ${error.message} ❌\n`));
+        }
     } else {
         throw new Error("Invalid option!")
     }
