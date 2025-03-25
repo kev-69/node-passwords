@@ -11,51 +11,38 @@ const argonOptions = {
     hashLength: 64
 };
 
-async function hashPassword(password, algorithm) {
-    if (algorithm === "bcrypt") {
-        const saltRounds = 12;
-        console.time(colorette.bgCyan("\nTime taken to hash password with bcrypt")) // start timer
-        const hashed = await bcrypt.hash(password, saltRounds);
-        console.timeEnd(colorette.bgCyan("\nTime taken to hash password with bcrypt")); // end timer
-        return hashed;
-
-    } else  if (algorithm === "argon2") {
-        console.time(colorette.bgCyan("\nTime taken to hash password with argon2")); // Start timer        
-        const hashed = await argon2.hash(password, argonOptions);
-        console.timeEnd(colorette.bgCyan("\nTime taken to hash password with argon2"));
-        return hashed;
-    } else {
-        throw new Error("Invalid algorithm!");
-    }
+async function hashBcrytp(password, algorithm) {
+    const saltRounds = 12;
+    console.time("\nbcrypt-hash"); // start timer
+    const hashed = await bcrypt.hash(password, saltRounds);
+    console.timeEnd("\nbcrypt-hash"); // end timer
+    return hashed;
 }
 
-async function verifyPassword(password, hash) {
-    try {
-        if (hash.startsWith("$2b$")) {
-            console.time(colorette.bgCyan("\nTime taken to verify password with bcrypt")); // Start timer
+async function hashArgon(password, algorithm) {
+    console.time("\nargon2-hash"); // Start timer
+    const hashed = await argon2.hash(password, argonOptions);
+    console.timeEnd("\nargon2-hash"); // End timer
+    return hashed;
+}
 
-            const isValid = await bcrypt.compare(password, hash);
+async function verifyBcrypt (password, hash) {
+    console.time("\nbcrypt-verify"); // Start timer
+    const isBcryptValid = await bcrypt.compare(password, hash);
+    console.timeEnd("\nbcrypt-verify"); // End timer
+    return isBcryptValid;
+}
 
-            console.timeEnd(colorette.bgCyan("\nTime taken to verify password with bcrypt")); // End timer
-            
-            return isValid;
-        } else if(hash.startsWith("$argon2")) {
-            console.time(colorette.bgCyan("\nTime taken to verify password with argon2")); // Start timer
-
-            const isValid = await argon2.verify(password, hash);
-
-            console.timeEnd(colorette.bgCyan("\nTime taken to verify password with argon2")); // End timer
-
-            return isValid
-        } else {
-            throw new Error("Invalid hash!");
-        }
-    } catch (error) {
-        return false;
-    }
+async function verifyArgon(password, hash) {
+    console.time("\nargon2-verify"); // Start timer
+    const isArgonValid = await argon2.verify(password, hash);
+    console.timeEnd("\nargon2-verify"); // End timer
+    return isArgonValid;
 }
 
 module.exports = {
-    hashPassword,
-    verifyPassword
+    hashBcrytp,
+    hashArgon,
+    verifyBcrypt,
+    verifyArgon,
 };
